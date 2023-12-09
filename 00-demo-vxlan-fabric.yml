@@ -1,0 +1,140 @@
+# example_ndfc_rest_fabric_create_easy_fabric_f2.yml
+# This creates a standalone fabric (i.e. not MSD child).
+---
+# Fabric and devices
+-   hosts: ndfc
+    gather_facts: false
+    roles:
+    - ndfc_rest_fabric_create_easy_fabric
+    vars:
+        fabric_name: f1
+
+-   hosts: ndfc
+    gather_facts: false
+    roles:
+    - ndfc_device_list_get
+    vars:
+        fabric_name: f1
+
+-   hosts: ndfc
+    gather_facts: false
+    roles:
+    - ndfc_device_list_merged
+    vars:
+        fabric_name: f1
+        devices: "{{ device_list }}"
+
+# VRFs
+-   hosts: ndfc
+    gather_facts: false
+    roles:
+    - ndfc_vrf_all
+    vars:
+        fabric_name: f1
+        state: replaced
+
+# Networks
+-   hosts: ndfc
+    gather_facts: false
+    roles:
+    - ndfc_network_replaced_all
+    vars:
+        fabric_name: f1
+
+# Deploy
+-   hosts: ndfc
+    gather_facts: false
+    roles:
+        - ndfc_rest_config_deploy_all
+    vars:
+        fabric_name: f1
+
+-   hosts: ndfc
+    gather_facts: false
+    vars:
+        fabric_name: f1
+    tasks:
+    -   name: Add loopbacks for testing inter-vrf routing
+        cisco.dcnm.dcnm_interface:
+            check_deploy: true
+            fabric: "{{ fabric_name }}"
+            state: merged
+            config:
+            -   name: Loopback11
+                type: lo
+                switch:
+                - 192.168.2.1
+                profile:
+                    admin_state: true
+                    mode: lo
+                    int_vrf: v1
+                    ipv4_addr: 1.1.1.106
+                    route_tag: 12345
+                    cmds:
+                        - no shutdown
+                    description: "test inter-vrf routing"
+            -   name: Loopback12
+                type: lo
+                switch:
+                - 192.168.2.1
+                profile:
+                    admin_state: true
+                    mode: lo
+                    int_vrf: v2
+                    ipv4_addr: 1.1.2.106
+                    route_tag: 12345
+                    cmds:
+                        - no shutdown
+                    description: "test inter-vrf routing"
+            -   name: Loopback11
+                type: lo
+                switch:
+                - 192.168.2.2
+                profile:
+                    admin_state: true
+                    mode: lo
+                    int_vrf: v1
+                    ipv4_addr: 1.1.1.107
+                    route_tag: 12345
+                    cmds:
+                        - no shutdown
+                    description: "test inter-vrf routing"
+            -   name: Loopback12
+                type: lo
+                switch:
+                - 192.168.2.2
+                profile:
+                    admin_state: true
+                    mode: lo
+                    int_vrf: v2
+                    ipv4_addr: 1.1.2.107
+                    route_tag: 12345
+                    cmds:
+                        - no shutdown
+                    description: "test inter-vrf routing"
+            -   name: Loopback11
+                type: lo
+                switch:
+                - 192.168.2.3
+                profile:
+                    admin_state: true
+                    mode: lo
+                    int_vrf: v1
+                    ipv4_addr: 1.1.1.108
+                    route_tag: 12345
+                    cmds:
+                        - no shutdown
+                    description: "test inter-vrf routing"
+            -   name: Loopback12
+                type: lo
+                switch:
+                - 192.168.2.3
+                profile:
+                    admin_state: true
+                    mode: lo
+                    int_vrf: v2
+                    ipv4_addr: 1.1.2.108
+                    route_tag: 12345
+                    cmds:
+                        - no shutdown
+                    description: "test inter-vrf routing"

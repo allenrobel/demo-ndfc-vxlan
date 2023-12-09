@@ -1,0 +1,9 @@
+# ndfc_device_list_merged/tasks/main.yml
+
+- name: merged FABRIC {{ fabric_name }}
+  cisco.dcnm.dcnm_inventory:
+    fabric: "{{ fabric_name }}"
+    state: merged
+    config: "{{ device_list }}"
+  vars:
+    ansible_connection: httpapi

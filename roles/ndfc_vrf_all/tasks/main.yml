@@ -1,0 +1,7 @@
+# ndfc_vrf/tasks/main.yml
+---
+- name: main {{ state }} FABRIC {{ fabric_name }}
+  include_tasks: worker.yml
+  loop: "{{ vrfs.values() | list | json_query(mq1) }}"
+  vars:
+    mq1: "[?fabric == '{{ fabric_name }}']"

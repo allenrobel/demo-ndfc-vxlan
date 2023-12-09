@@ -1,0 +1,32 @@
+devices:
+  # switch_fabric f1 ----------------------------------------------
+  leaf_1:
+    name: leaf_1
+    switch_fabric: "{{ vxlan_fabric.f1.FABRIC_NAME }}"
+    ip: 192.168.2.1
+    role: leaf
+    preserve_config: False
+  leaf_2:
+    name: leaf_2
+    switch_fabric: "{{ vxlan_fabric.f1.FABRIC_NAME }}"
+    ip: 192.168.2.2
+    role: leaf
+    preserve_config: False
+  leaf_3:
+    name: leaf_3
+    switch_fabric: "{{ vxlan_fabric.f1.FABRIC_NAME }}"
+    ip: 192.168.2.3
+    role: leaf
+    preserve_config: False
+  spine_1:
+    name: spine_1
+    switch_fabric: "{{ vxlan_fabric.f1.FABRIC_NAME }}"
+    ip: 192.168.2.4
+    role: spine
+    preserve_config: False
+  spine_2:
+    name: spine_2
+    switch_fabric: "{{ vxlan_fabric.f1.FABRIC_NAME }}"
+    ip: 192.168.2.5
+    role: spine
+    preserve_config: False

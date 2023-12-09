@@ -1,0 +1,38 @@
+port_groups:
+    pg11:
+    - Ethernet1/11
+    pg12:
+    - Ethernet1/12
+
+networks:
+    fabric_1_n1111:
+        name: fabric_1_n1111
+        fabric: "{{ vxlan_fabric.f1.FABRIC_NAME }}"
+        net_name: n1111
+        vrf_name: v1
+        vlan_id: 1111
+        gw_ip_subnet: "10.21.1.1/24"
+        tag: 12345
+        attach:
+        -   ip_address: "{{ devices.leaf_1.ip }}"
+            ports: "{{ port_groups.pg11 }}"
+        -   ip_address: "{{ devices.leaf_2.ip }}"
+            ports: "{{ port_groups.pg11 }}"
+        -   ip_address: "{{ devices.leaf_3.ip }}"
+            ports: "{{ port_groups.pg11 }}"
+
+    fabric_1_n1112:
+        name: fabric_1_n1112
+        fabric: "{{ vxlan_fabric.f1.FABRIC_NAME }}"
+        net_name: n1112
+        vrf_name: v2
+        vlan_id: 1112
+        gw_ip_subnet: "10.22.1.1/24"
+        tag: 12345
+        attach:
+        -   ip_address: "{{ devices.leaf_1.ip }}"
+            ports: "{{ port_groups.pg12 }}"
+        -   ip_address: "{{ devices.leaf_2.ip }}"
+            ports: "{{ port_groups.pg12 }}"
+        -   ip_address: "{{ devices.leaf_3.ip }}"
+            ports: "{{ port_groups.pg12 }}"
