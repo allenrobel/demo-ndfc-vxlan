@@ -1,5 +1,6 @@
-# example_ndfc_rest_fabric_create_easy_fabric_f2.yml
-# This creates a standalone fabric (i.e. not MSD child).
+# 00-demo-vxlan-fabric.yml
+# Create a VXLAN fabric and populate with the devices, vrfs, and networks defined
+# in inventory/group_vars.
 ---
 # Fabric and devices
 -   hosts: ndfc
@@ -49,6 +50,7 @@
     vars:
         fabric_name: f1
 
+# Add some loopbacks for verifying inter-vrf routing
 -   hosts: ndfc
     gather_facts: false
     vars:
