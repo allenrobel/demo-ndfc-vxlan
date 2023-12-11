@@ -1,4 +1,5 @@
 # ndfc_device_list_merged/tasks/main.yml
+# Requires that device_list is defined in the playbook
 
 - name: merged FABRIC {{ fabric_name }}
   cisco.dcnm.dcnm_inventory:
